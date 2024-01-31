@@ -1,5 +1,5 @@
 <?php
-require("/home/gustavo/Área de Trabalho/Desafio 3/RequisicaoCurl.php");
+require("RequisicaoCurl.php");
 class Controlador
 {
     public function desafio2($route)
