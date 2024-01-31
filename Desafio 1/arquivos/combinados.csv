@@ -1,0 +1,5 @@
+id_produto,preco_unitario,ultima_data_de_venda,quantidade_total_vendida,valor_total_vendido
+
+53f125fc-cb76-4002-a41f-f11cdb1b63ec,4.35,"2019-04-14 17:01",30,130.5
+a29fe28d-a86a-43e8-8889-46e84b97524a,17.53,"2022-02-01 03:22",15,262.95
+b788c2a7-376e-4945-b48a-3d0efdfd73bb,19.86,"2022-02-01 03:22",124,2462.64

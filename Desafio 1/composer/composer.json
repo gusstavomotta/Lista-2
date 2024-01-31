@@ -1,0 +1,17 @@
+{
+    "name": "gustavo/composer",
+    "description": "Testando composer",
+    "require": {
+        "phpmailer/phpmailer": "6.9.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gustavo\\Composer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gustavo"
+        }
+    ]
+}
