@@ -8,7 +8,6 @@ class Funcionario
     public string $genero;
     public int $idade;
     public float $salario;
-
     public function __construct(int $id, string $nome, string $genero, int $idade, float $salario)
     {
         $this->id = $id;
@@ -27,7 +26,6 @@ class Funcionario
         $salario_atualizado = $salario_atual + ($salario_atual * $percentual / 100);
 
         pg_query($conexao, "UPDATE funcionarios SET salario = $salario_atualizado WHERE id = $id");
-
     }
     /*
     public function adicionar_funcionario($conexao, int $id, string $nome, string $genero, int $idade, float $salario)
@@ -46,7 +44,6 @@ class Funcionario
         pg_query($conexao, $query);
 
     }
-
     public function listar_todos($conexao)
     {
         $query = pg_query($conexao, "SELECT * FROM funcionarios");
@@ -55,7 +52,6 @@ class Funcionario
             echo "<br>ID: {$linha['id']}<br> Nome: {$linha['nome']}<br> Gênero: {$linha['genero']}<br> Idade: {$linha['idade']}<br> Salário: {$linha['salario']}<br>";
         }
     }
-
     public function listar_por_id($conexao, int $id)
     {
         $query = pg_query($conexao, "SELECT * FROM funcionarios WHERE id = $id");
@@ -64,7 +60,6 @@ class Funcionario
             echo "<br>ID: {$linha['id']}<br> Nome: {$linha['nome']}<br> Gênero: {$linha['genero']}<br> Idade: {$linha['idade']}<br> Salário: {$linha['salario']}<br>";
         }
     }
-
     public function atualizar_funcionario($conexao, $id, $nome_atributo, $novo_atributo)
     {
         $query = "UPDATE funcionarios SET $nome_atributo = '$novo_atributo' WHERE id = '$id'";
