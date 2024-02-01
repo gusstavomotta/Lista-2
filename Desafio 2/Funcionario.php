@@ -11,95 +11,52 @@ class Funcionario
 
     public function __construct(int $id, string $nome, string $genero, int $idade, float $salario)
     {
-
         $this->id = $id;
         $this->nome = $nome;
         $this->genero = $genero;
         $this->idade = $idade;
         $this->salario = $salario;
-
     }
-    // Getters
-    public function get_id_funcionario(): int
-    {
-        return $this->id;
-    }
-
-    public function get_nome(): string
-    {
-        return $this->nome;
-    }
-
-    public function get_genero(): string
-    {
-        return $this->genero;
-    }
-
-    public function get_idade(): int
-    {
-        return $this->idade;
-    }
-
-    public function get_salario(): float
-    {
-        return $this->salario;
-    }
-
-    // Setters
-    public function set_id_funcionario(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    public function set_nome(string $nome): void
-    {
-        $this->nome = $nome;
-    }
-
-    public function set_genero(string $genero): void
-    {
-        $this->genero = $genero;
-    }
-
-    public function set_idade(int $idade): void
-    {
-        $this->idade = $idade;
-    }
-
-    public function set_salario(float $salario): void
-    {
-        $this->salario = $salario;
-    }
-    public function aumentar_salario($percentual)
+    public function aumentar_salario(int $id, int $percentual)
     {
         $this->salario += $this->salario * ($percentual / 100);
     }
 
-    public static function adicionar_funcionario(int $id, string $nome, string $genero, int $idade, float $salario)
+    public function adicionar_funcionario(int $id, string $nome, string $genero, int $idade, float $salario)
     {
         $conn = new Conexao();
         $conexao = $conn->conecta_no_banco();
         $funcionario = new Funcionario($id, $nome, $genero, $idade, $salario);
-        print_r((array) $funcionario);
-
         pg_insert($conexao, 'funcionarios', (array) $funcionario);
+        pg_close($conexao);
     }
 
-    public static function remover_funcionarios(int $id_funcionario)
+    public function remover_funcionarios($conexao, int $id_funcionario)
+    {
+        $query = 'DELETE FROM funcionarios WHERE id = $1';
+        $id = array($id_funcionario);
+        pg_query_params($conexao, $query, $id);
+    }
+
+    public function listar_todos($conexao)
+    {
+        $query = pg_query($conexao, 'SELECT * FROM funcionarios');
+        while ($linha = pg_fetch_row($query)) {
+            echo "<br>ID: $linha[0]<br> Nome: $linha[1]<br> Gênero: $linha[2]<br> Idade: $linha[3]<br> Salário: $linha[4]<br>";
+        }
+    }
+
+    public function listar_por_id($conexao, int $id)
+    {
+        $query = pg_query_params($conexao, 'SELECT * FROM funcionarios WHERE id = $1', array($id));
+        while ($linha = pg_fetch_row($query)) {
+            echo "<br>ID: $linha[0]<br> Nome: $linha[1]<br> Gênero: $linha[2]<br> Idade: $linha[3]<br> Salário: $linha[4]<br>";
+        }
+    }
+
+    public function atualizar_funcionario($conexao, $id, $atributo, $novo_atributo)
     {
 
 
     }
-    public static function listar_funcionarios()
-    {
-
-
-    }
-    public function atualizar_funcionario()
-    {
-
-
-    }
-
-
 }
