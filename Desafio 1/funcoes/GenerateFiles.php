@@ -1,32 +1,39 @@
 <?php
 
-class GenerateFiles {
-    public static string $orders_csv_name = '/home/imply/Documentos/GitHub/Lista-2-Desafios/Lista 2/Desafio 1/arquivos/orders.csv';
-    public static string $products_csv_name = '/home/imply/Documentos/GitHub/Lista-2-Desafios/Lista 2/Desafio 1/arquivos/products.csv';
+class GenerateFiles
+{
+    public static string $orders_csv_name = 'arquivos/orders.csv';
+    public static string $products_csv_name = 'arquivos/products.csv';
     private array $products_id = [];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->generateProductsCsv();
         $this->generateOrdersCsv();
     }
 
-    private function generateProductsCsv() {
-        $file     = fopen(self::$products_csv_name, 'w');
+    private function generateProductsCsv()
+    {
+        $file = fopen(self::$products_csv_name, 'w');
         fputcsv($file, ['product_id', 'name', 'price']);
 
-        $count = 3;
+        $count = 20;
 
-        for ($i=0; $i < $count; $i++) { 
-            $id =  sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-                mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-                mt_rand( 0, 0xffff ),
-                mt_rand( 0, 0x0fff ) | 0x4000,
-                mt_rand( 0, 0x3fff ) | 0x8000,
-                mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+        for ($i = 0; $i < $count; $i++) {
+            $id = sprintf(
+                '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+                mt_rand(0, 0xffff),
+                mt_rand(0, 0xffff),
+                mt_rand(0, 0xffff),
+                mt_rand(0, 0x0fff) | 0x4000,
+                mt_rand(0, 0x3fff) | 0x8000,
+                mt_rand(0, 0xffff),
+                mt_rand(0, 0xffff),
+                mt_rand(0, 0xffff)
             );
 
             $this->products_id[] = $id;
-            $value = rand(1, 2000) / 100;  
+            $value = rand(1, 2000) / 100;
             $price = number_format($value, 2);
 
             fputcsv($file, [$id, 'Product ' . $i, $price]);
@@ -35,25 +42,26 @@ class GenerateFiles {
         fclose($file);
     }
 
-    private function generateOrdersCsv() {
+    private function generateOrdersCsv()
+    {
         $file = fopen(self::$orders_csv_name, 'w');
         fputcsv($file, ['order_id', 'product_id', 'date', 'quantity']);
 
         $last_id = '';
         $last_date = '';
 
-        $count = 5;
+        $count = 35;
 
-        for ($i=0; $i < $count; $i++) { 
+        for ($i = 0; $i < $count; $i++) {
             $same = rand(0, 1);
 
             if ($same) {
-                $id   = $last_id;
+                $id = $last_id;
                 $date = $last_date;
             } else {
                 $randomYear = rand(2016, 2022);
                 $randomMonth = rand(1, 12);
-                $randomDay  = rand(1, 30);
+                $randomDay = rand(1, 30);
                 $randomHour = rand(0, 23);
                 $randomMinute = rand(0, 59);
 
@@ -61,12 +69,16 @@ class GenerateFiles {
                     $randomDay = 28;
                 }
 
-                $id =  sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-                    mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-                    mt_rand( 0, 0xffff ),
-                    mt_rand( 0, 0x0fff ) | 0x4000,
-                    mt_rand( 0, 0x3fff ) | 0x8000,
-                    mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+                $id = sprintf(
+                    '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+                    mt_rand(0, 0xffff),
+                    mt_rand(0, 0xffff),
+                    mt_rand(0, 0xffff),
+                    mt_rand(0, 0x0fff) | 0x4000,
+                    mt_rand(0, 0x3fff) | 0x8000,
+                    mt_rand(0, 0xffff),
+                    mt_rand(0, 0xffff),
+                    mt_rand(0, 0xffff)
                 );
 
                 $last_id = $id;

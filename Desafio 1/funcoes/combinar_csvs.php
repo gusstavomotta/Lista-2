@@ -1,8 +1,8 @@
 <?php
 
-require_once("/home/imply/Documentos/GitHub/Lista-2-Desafios/Lista 2/Desafio 1/classes/Pedidos.php");
-require_once("/home/imply/Documentos/GitHub/Lista-2-Desafios/Lista 2/Desafio 1/classes/Produtos.php");
-require_once("/home/imply/Documentos/GitHub/Lista-2-Desafios/Lista 2/Desafio 1/classes/Dados_Combinados.php");
+require_once("classes/Pedidos.php");
+require_once("classes/Produtos.php");
+require_once("classes/Dados_Combinados.php");
 
 function combinar_csv($array_produtos, $array_pedidos): array
 {

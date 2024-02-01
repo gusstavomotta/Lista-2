@@ -1,12 +1,12 @@
 <?php
-require_once("/home/imply/Documentos/GitHub/Lista-2-Desafios/Lista 2/Desafio 1/classes/Produtos.php");
+require_once("classes/Produtos.php");
 
 function ler_csv_produtos(): array
 {
 
     //abre o arquivo e le o cabeçalho
     $separador = ',';
-    $arquivo = fopen('/home/imply/Documentos/GitHub/Lista-2-Desafios/Lista 2/Desafio 1/arquivos/products.csv', 'r');
+    $arquivo = fopen('arquivos/products.csv', 'r');
     $cabecalho = fgetcsv($arquivo, 0, $separador);
     //enquanto não for o fim do arquivo o loop continua
     while (!feof($arquivo)) {
