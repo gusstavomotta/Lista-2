@@ -16,47 +16,59 @@ class Funcionario
         $this->genero = $genero;
         $this->idade = $idade;
         $this->salario = $salario;
-    }
-    public function aumentar_salario(int $id, int $percentual)
-    {
-        $this->salario += $this->salario * ($percentual / 100);
-    }
 
-    public function adicionar_funcionario(int $id, string $nome, string $genero, int $idade, float $salario)
+    }
+    public function aumentar_salario($conexao, int $id, int $percentual)
     {
-        $conn = new Conexao();
-        $conexao = $conn->conecta_no_banco();
+        $query = pg_query($conexao, "SELECT salario FROM funcionarios f WHERE f.id = $id");
+        $linha = pg_fetch_assoc($query);
+
+        $salario_atual = $linha['salario'];
+        $salario_atualizado = $salario_atual + ($salario_atual * $percentual / 100);
+
+        pg_query($conexao, "UPDATE funcionarios SET salario = $salario_atualizado WHERE id = $id");
+
+    }
+    /*
+    public function adicionar_funcionario($conexao, int $id, string $nome, string $genero, int $idade, float $salario)
+    {
         $funcionario = new Funcionario($id, $nome, $genero, $idade, $salario);
         pg_insert($conexao, 'funcionarios', (array) $funcionario);
-        pg_close($conexao);
     }
-
+    */
+    public function adicionar_funcionario($conexao, Funcionario $funcionario)
+    {
+        pg_insert($conexao, 'funcionarios', (array) $funcionario);
+    }
     public function remover_funcionarios($conexao, int $id_funcionario)
     {
-        $query = 'DELETE FROM funcionarios WHERE id = $1';
-        $id = array($id_funcionario);
-        pg_query_params($conexao, $query, $id);
+        $query = "DELETE FROM funcionarios WHERE id = $id_funcionario";
+        pg_query($conexao, $query);
+
     }
 
     public function listar_todos($conexao)
     {
-        $query = pg_query($conexao, 'SELECT * FROM funcionarios');
-        while ($linha = pg_fetch_row($query)) {
-            echo "<br>ID: $linha[0]<br> Nome: $linha[1]<br> Gênero: $linha[2]<br> Idade: $linha[3]<br> Salário: $linha[4]<br>";
+        $query = pg_query($conexao, "SELECT * FROM funcionarios");
+
+        while ($linha = pg_fetch_assoc($query)) {
+            echo "<br>ID: {$linha['id']}<br> Nome: {$linha['nome']}<br> Gênero: {$linha['genero']}<br> Idade: {$linha['idade']}<br> Salário: {$linha['salario']}<br>";
         }
     }
 
     public function listar_por_id($conexao, int $id)
     {
-        $query = pg_query_params($conexao, 'SELECT * FROM funcionarios WHERE id = $1', array($id));
-        while ($linha = pg_fetch_row($query)) {
-            echo "<br>ID: $linha[0]<br> Nome: $linha[1]<br> Gênero: $linha[2]<br> Idade: $linha[3]<br> Salário: $linha[4]<br>";
+        $query = pg_query($conexao, "SELECT * FROM funcionarios WHERE id = $id");
+
+        while ($linha = pg_fetch_assoc($query)) {
+            echo "<br>ID: {$linha['id']}<br> Nome: {$linha['nome']}<br> Gênero: {$linha['genero']}<br> Idade: {$linha['idade']}<br> Salário: {$linha['salario']}<br>";
         }
     }
 
-    public function atualizar_funcionario($conexao, $id, $atributo, $novo_atributo)
+    public function atualizar_funcionario($conexao, $id, $nome_atributo, $novo_atributo)
     {
-
+        $query = "UPDATE funcionarios SET $nome_atributo = '$novo_atributo' WHERE id = '$id'";
+        pg_query($conexao, $query);
 
     }
 }
