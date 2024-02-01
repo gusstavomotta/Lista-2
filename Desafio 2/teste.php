@@ -1,8 +1,8 @@
 <?php
-echo "testandoooooo";
-phpinfo();
+//echo "testandoooooo";
+//phpinfo();
 
-$conn = pg_connect("host=db port=5432 dbname=sys user=root password=root");
+$conn = pg_connect("host=db port=5432 dbname=postgres user=postgres password=root");
 if (!$conn) {
     echo "Erro de conexão.";
 } else {

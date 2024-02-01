@@ -1,20 +1,22 @@
-php:
-  image: php:8.1.2-apache
-  container_name: meu-php
-  ports:
-    - "8000:80"
-    - "443:443"
-  volumes:
-    - /home/gustavo/Documentos/GitHub/Lista 2/Lista-2/Desafio 2:/var/www/html
-  links:
-    - db
+version: '3'
+services:
+  php:
+    build: /home/imply/Documentos/GitHub/Lista-2-Desafios/Lista 2/Desafio 3/Lista-2/Desafio 2
+    container_name: meu-php
+    ports:
+      - "8000:80"
+      - "443:443"
+    volumes:
+      - /home/imply/Documentos/GitHub/Lista-2-Desafios/Lista 2/Desafio 3/Lista-2/Desafio 2:/var/www/html
+    links:
+      - db
 
-db:
-  image: postgres:latest
-  container_name: meu-postgres
-  ports:
-    - "5432:5432"
-  volumes:
-    - /var/lib/postgres/data
-  environment:
-    - POSTGRES_PASSWORD=root
+  db:
+    image: postgres:latest
+    container_name: meu-postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgres/data
+    environment:
+      - POSTGRES_PASSWORD=root
