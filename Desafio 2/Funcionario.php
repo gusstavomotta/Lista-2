@@ -3,11 +3,11 @@
 require("Conexao.php");
 class Funcionario
 {
-    private int $id;
-    private string $nome;
-    private string $genero;
-    private int $idade;
-    private float $salario;
+    public int $id;
+    public string $nome;
+    public string $genero;
+    public int $idade;
+    public float $salario;
 
     public function __construct(int $id, string $nome, string $genero, int $idade, float $salario)
     {
