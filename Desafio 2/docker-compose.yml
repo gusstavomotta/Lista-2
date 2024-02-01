@@ -5,16 +5,16 @@ php:
     - "8000:80"
     - "443:443"
   volumes:
-    - /home/gustavo/Documentos/GitHub/Lista-2-Desafios/Lista 2/Desafio 2:/var/www/html
+    - /home/gustavo/Documentos/GitHub/Lista 2/Lista-2/Desafio 2:/var/www/html
   links:
     - db
 
 db:
-  image: mysql:latest
-  container_name: meu-mysql
+  image: postgres:latest
+  container_name: meu-postgres
   ports:
-    - "3306:3306"
+    - "5432:5432"
   volumes:
-    - /var/lib/mysql
+    - /var/lib/postgres/data
   environment:
-    - MYSQL_ROOT_PASSWORD=root
+    - POSTGRES_PASSWORD=root

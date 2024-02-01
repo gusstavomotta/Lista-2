@@ -50,7 +50,6 @@ class Controlador
         $searched = explode('/', substr($route, 1))[1];
 
         if (!file_exists("$searched.txt")) {
-
             $message = 'Fetched from API.';
             $response = $RequisicaoCurl->get("pokemon/$searched");
 
