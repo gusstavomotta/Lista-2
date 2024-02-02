@@ -36,4 +36,9 @@ $func->aumentar_salario($conexao, 4, 20);
 $func->listar_todos($conexao);
 $func->listar_por_id($conexao, 3);
 
+$idFuncionario = 2;
+unset($funcionario1);
+$funcionario5 = (new Funcionario(0, '', '', 0, 0))->listar_por_id($conexao, $idFuncionario);
+print_r($funcionario5);
+
 pg_close($conexao);

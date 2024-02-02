@@ -27,13 +27,6 @@ class Funcionario
 
         pg_query($conexao, "UPDATE funcionarios SET salario = $salario_atualizado WHERE id = $id");
     }
-    /*
-    public function adicionar_funcionario($conexao, int $id, string $nome, string $genero, int $idade, float $salario)
-    {
-        $funcionario = new Funcionario($id, $nome, $genero, $idade, $salario);
-        pg_insert($conexao, 'funcionarios', (array) $funcionario);
-    }
-    */
     public function adicionar_funcionario($conexao, Funcionario $funcionario)
     {
         pg_insert($conexao, 'funcionarios', (array) $funcionario);
@@ -54,11 +47,19 @@ class Funcionario
     }
     public function listar_por_id($conexao, int $id)
     {
-        $query = pg_query($conexao, "SELECT * FROM funcionarios WHERE id = $id");
+        $query = "SELECT * FROM funcionarios WHERE id = $id";
+        $retorno = pg_query($conexao, $query);
+        $linhas = pg_fetch_assoc($retorno);
 
-        while ($linha = pg_fetch_assoc($query)) {
-            echo "<br>ID: {$linha['id']}<br> Nome: {$linha['nome']}<br> Gênero: {$linha['genero']}<br> Idade: {$linha['idade']}<br> Salário: {$linha['salario']}<br>";
-        }
+        $funcionario = new Funcionario(0, '', '', 0, 0);
+        $funcionario->id = $linhas["id"];
+        $funcionario->nome = $linhas["nome"];
+        $funcionario->genero = $linhas["genero"];
+        $funcionario->idade = $linhas["idade"];
+        $funcionario->salario = $linhas["salario"];
+
+        return $funcionario;
+
     }
     public function atualizar_funcionario($conexao, $id, $nome_atributo, $novo_atributo)
     {
